@@ -18,7 +18,7 @@ jobs:
       - run: yarn install
       - run: echo "$GITHUB_ACTOR_ID $GITHUB_ACTOR"
       - name: Build
-        run: yarn build:legaltech
+        run: yarn build
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
           REACT_APP_APP_NAME: ${{ secrets.REACT_APP_APP_NAME }}
