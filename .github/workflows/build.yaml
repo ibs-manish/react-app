@@ -29,26 +29,11 @@ jobs:
 
       - name: Add Github Actions IP to Security group
         run: |
-          aws ec2 authorize-security-group-ingress --group-name launch-wizard-1 --protocol tcp --port 22 --cidr 18.220.107.199/32    
+          aws sts get-caller-identity --query Account --output text
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
-      - name: Deploy
-        run: |
-          echo ${{ secrets.DEVELOP_SSH_USER }} ${{ secrets.DEVELOP_SERVER_IP }} ${{ secrets.DEVELOP_SOURCE_LOCATION }}
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && touch manish-test-1.txt
-         
-
-      - name: Remove Github Actions IP from security group
-        run: |
-          aws ec2 revoke-security-group-ingress --group-name launch-wizard-1 --protocol tcp --port 22 --cidr 18.220.107.199/32 
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-        if: always()
-
+      
