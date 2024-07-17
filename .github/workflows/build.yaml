@@ -8,16 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.DEV_EC2_PEM }}
-
-      - name: Deploy
+      - uses: actions/checkout@v2 
+      - name: Build & Deploy
+        env:
+            PRIVATE_KEY: ${{ secrets.DEV_EC2_PEM }}
+            HOSTNAME: ${{secrets.DEVELOP_SERVER_IP}}
+            USER_NAME: ${{secrets.DEVELOP_SSH_USER}}
         run: |
-          echo ${{ secrets.DEVELOP_SSH_USER }} ${{ secrets.DEVELOP_SERVER_IP }} ${{ secrets.DEVELOP_SOURCE_LOCATION }}
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && touch manish-test-1.txt
-
-      
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${DEVELOP_SSH_USER}@${DEVELOP_SERVER_IP}
+              touch manish_test_1.txt
