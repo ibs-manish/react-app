@@ -16,9 +16,10 @@ jobs:
           key: ${{ secrets.DEV_EC2_PEM }}
           known_hosts: ${{ secrets.DEV_EC2_KNOWN_HOSTS }}
           if_key_exists: fail
-          
+
       - name: Deploy
         run: |
+          echo ${{ secrets.DEVELOP_SSH_USER }} ${{ secrets.DEVELOP_SERVER_IP }} ${{ secrets.DEVELOP_SOURCE_LOCATION }}
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && touch manish-test-1.txt
 
       
