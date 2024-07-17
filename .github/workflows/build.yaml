@@ -15,5 +15,9 @@ jobs:
             HOSTNAME: ${{secrets.DEVELOP_SERVER_IP}}
             USER_NAME: ${{secrets.DEVELOP_SSH_USER}}
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${DEVELOP_SSH_USER}@${DEVELOP_SERVER_IP} touch ~/manish_test_1.txt
+          echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${DEVELOP_SSH_USER}@${DEVELOP_SERVER_IP}'
+
+              # Now we have got the access of EC2 and we will start the deploy .
+              touch ~/manish-test-1.txt
+            '
