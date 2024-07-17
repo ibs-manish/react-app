@@ -16,5 +16,4 @@ jobs:
             USER_NAME: ${{secrets.DEVELOP_SSH_USER}}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${DEVELOP_SSH_USER}@${DEVELOP_SERVER_IP}
-              touch manish_test_1.txt
+          ssh -o StrictHostKeyChecking=no -i private_key ${DEVELOP_SSH_USER}@${DEVELOP_SERVER_IP} touch ~/manish_test_1.txt
