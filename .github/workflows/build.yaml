@@ -19,4 +19,4 @@ jobs:
       
       - name: Deploy
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "touch ~/manish-test-1.txt"
+          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "touch ~/manish-test-1.txt"
