@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import DataFetcher from './components/DataFetcher';
 import './App.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<h2>Welcome to My React App!</h2>} />
+            <Route path="/data" element={<DataFetcher />} />
           </Routes>
         </main>
         <Footer />

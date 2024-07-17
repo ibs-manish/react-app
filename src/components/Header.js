@@ -10,7 +10,8 @@ const HeaderWrapper = styled.header`
 const Header = () => {
   return (
     <HeaderWrapper>
-      <h1>My React App</h1>
+      <h1>{process.env.REACT_APP_APP_NAME}</h1>
+      <p>Version: {process.env.REACT_APP_VERSION}</p>
     </HeaderWrapper>
   );
 };

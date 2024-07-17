@@ -11,7 +11,7 @@ const FooterWrapper = styled.footer`
 const Footer = () => {
   return (
     <FooterWrapper>
-      <p>&copy; 2024 My React App</p>
+      <p>&copy; 2024 {process.env.REACT_APP_APP_NAME}</p>
     </FooterWrapper>
   );
 };
