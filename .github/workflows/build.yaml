@@ -47,6 +47,8 @@ jobs:
       - name: Deploy
         run: |
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && git fetch origin && git reset origin/release/manish --hard"
+          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && node --version"
+          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && npm --version"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && npm install -g yarn"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && npm install -g pm2"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && yarn install && yarn build"
