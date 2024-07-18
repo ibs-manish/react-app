@@ -38,14 +38,9 @@ jobs:
       - name: Deploy
         run: |
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && echo $USER"
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && sudo id"
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && sudo apt update -y"
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && sudo echo $USER"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && git fetch origin && git reset origin/release/manish --hard"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && pwd"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && ls"
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && echo ${{ secrets.DEVELOP_SSH_USER }} | tee -a script.sh"
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && echo $USER | tee -a script.sh"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && sudo node --version"
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
