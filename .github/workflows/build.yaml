@@ -16,15 +16,6 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - run: yarn install
-      
-      - name: Build
-        run: yarn build
-        env:
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
-          REACT_APP_APP_NAME: ${{ secrets.REACT_APP_APP_NAME }}
-          REACT_APP_VERSION: ${{ secrets.REACT_APP_VERSION }}
-
       - name: Get Github action IP
         id: ip
         uses: haythem/public-ip@v1.3
@@ -43,19 +34,15 @@ jobs:
           key: ${{ secrets.DEVELOP_EC2_PEM }}
           known_hosts: ${{ secrets.DEVELOP_EC2_KNOWN_HOSTS }}
           if_key_exists: fail
-
-      - name: Use Node.js 18.15.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.15.0
-          cache: 'npm'
       
       - name: Deploy
         run: |
+          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && echo $USER"
+          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && sudo su ubuntu"
+          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && echo $USER"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && git fetch origin && git reset origin/release/manish --hard"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && pwd"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && ls"
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && echo $USER"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && node --version"
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
