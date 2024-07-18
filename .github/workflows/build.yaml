@@ -46,10 +46,9 @@ jobs:
       
       - name: Deploy
         run: |
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && rm -rf node_modules"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && git fetch origin && git reset origin/dev --hard"
           ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && yarn install && yarn build"
-          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && yarn start"
+          ssh ${{ secrets.DEVELOP_SSH_USER }}@${{ secrets.DEVELOP_SERVER_IP }} "cd ${{ secrets.DEVELOP_SOURCE_LOCATION }} && pm2 reload all --update-env"
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
           REACT_APP_APP_NAME: ${{ secrets.REACT_APP_APP_NAME }}
