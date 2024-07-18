@@ -43,6 +43,12 @@ jobs:
           key: ${{ secrets.DEVELOP_EC2_PEM }}
           known_hosts: ${{ secrets.DEVELOP_EC2_KNOWN_HOSTS }}
           if_key_exists: fail
+
+      - name: Use Node.js 18.15.0
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.15.0
+          cache: 'npm'
       
       - name: Deploy
         run: |
